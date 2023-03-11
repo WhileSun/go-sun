@@ -1,0 +1,167 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "go-server服务接口文档",
+        "title": "接囗文档",
+        "contact": {
+            "name": "whileSun"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:3000",
+    "basePath": "/api",
+    "paths": {
+        "/v1/captcha/get": {
+            "get": {
+                "description": "登录验证码",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys"
+                ],
+                "operationId": "getCaptcha",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.JsonResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/types.GetCaptchaResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/login": {
+            "post": {
+                "description": "登录接口",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "operationId": "userLogin",
+                "parameters": [
+                    {
+                        "description": "UserLoginReq",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/types.UserLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.JsonResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/types.UserLoginResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "types.GetCaptchaResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "验证码ID",
+                    "type": "string"
+                },
+                "src": {
+                    "description": "验证码base64",
+                    "type": "string"
+                }
+            }
+        },
+        "types.JsonResp": {
+            "type": "object",
+            "required": [
+                "code",
+                "data",
+                "msg",
+                "time"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "integer"
+                }
+            }
+        },
+        "types.UserLoginReq": {
+            "type": "object",
+            "required": [
+                "captcha_code",
+                "captcha_id",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "captcha_code": {
+                    "description": "验证码",
+                    "type": "string"
+                },
+                "captcha_id": {
+                    "description": "验证码ID",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "用户名称",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "用户名称",
+                    "type": "string",
+                    "maxLength": 1,
+                    "minLength": 0
+                }
+            }
+        },
+        "types.UserLoginResp": {
+            "type": "object",
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "token": {
+                    "description": "jwt token",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
