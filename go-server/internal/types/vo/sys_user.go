@@ -7,4 +7,5 @@ type SysUserModel struct {
 	Password string `json:"password"`
 	RealName string `json:"real_name"`
 	Status   bool   `json:"status"`
+	Avatar   string `json:"avatar"`
 }

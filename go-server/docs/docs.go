@@ -49,6 +49,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/user/info/get": {
+            "get": {
+                "description": "获取用户信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "operationId": "getUserInfo",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.JsonResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/types.GetUserInfoResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/login": {
             "post": {
                 "description": "登录接口",
@@ -91,11 +123,50 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/user/out.login": {
+            "get": {
+                "description": "用户退出接口",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "operationId": "userOutLogin",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.JsonResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "types.GetCaptchaResp": {
             "type": "object",
+            "required": [
+                "id",
+                "src"
+            ],
             "properties": {
                 "id": {
                     "description": "验证码ID",
@@ -104,6 +175,28 @@ const docTemplate = `{
                 "src": {
                     "description": "验证码base64",
                     "type": "string"
+                }
+            }
+        },
+        "types.GetUserInfoResp": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "real_name",
+                "status"
+            ],
+            "properties": {
+                "avatar": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "real_name": {
+                    "description": "用户名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "用户状态",
+                    "type": "boolean"
                 }
             }
         },
@@ -151,9 +244,7 @@ const docTemplate = `{
                 },
                 "username": {
                     "description": "用户名称",
-                    "type": "string",
-                    "maxLength": 1,
-                    "minLength": 0
+                    "type": "string"
                 }
             }
         },

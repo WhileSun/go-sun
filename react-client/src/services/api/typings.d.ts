@@ -1,9 +1,18 @@
 declare namespace API {
   type GetCaptchaResp = {
     /** 验证码ID */
-    id?: string;
+    id: string;
     /** 验证码base64 */
-    src?: string;
+    src: string;
+  };
+
+  type GetUserInfoResp = {
+    /** 用户头像 */
+    avatar: string;
+    /** 用户名称 */
+    real_name: string;
+    /** 用户状态 */
+    status: boolean;
   };
 
   type JsonResp = {

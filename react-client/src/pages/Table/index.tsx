@@ -205,7 +205,8 @@ const TableList: React.FC<unknown> = () => {
         onCancel={() => handleModalVisible(false)}
         modalVisible={createModalVisible}
       >
-        <ProTable<API.UserInfo, API.UserInfo>
+        <ProTable
+          <API.UserInfo, API.UserInfo>
           onSubmit={async (value) => {
             const success = await handleAdd(value);
             if (success) {

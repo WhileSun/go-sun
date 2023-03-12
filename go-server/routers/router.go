@@ -26,6 +26,13 @@ func RegisterHandlers() *gin.Engine {
 		{
 			v1.GET("/captcha/get", apis.SysGlobalHandler.GetCaptcha)
 			v1.POST("/user/login", apis.SysUserHandler.Login)
+
+		}
+		v1.Use(middleware.LoginAuth())
+		userRouter := v1.Group("/user")
+		{
+			userRouter.GET("/out.login", apis.SysUserHandler.OutLogin)
+			userRouter.GET("/info/get", apis.SysUserHandler.GetInfo)
 		}
 	}
 

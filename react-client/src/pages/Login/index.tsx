@@ -1,15 +1,17 @@
 import { Col, Row, Form, Input, Button, Checkbox, Divider, message } from 'antd';
 import { LockOutlined, SafetyOutlined, UserOutlined } from '@ant-design/icons';
-import { useState,useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { userLogin } from '@/services/api/user';
 import { getCaptcha } from '@/services/api/sys';
-import { setToken, getToken} from '@/utils/token';
+import { setToken, getToken } from '@/utils/token';
+import { history,useModel } from '@umijs/max';
 import styles from './index.less';
+import qs from 'query-string';
 
 const LoginPage: React.FC<unknown> = () => {
-
+  const { initialState, setInitialState } = useModel('@@initialState');
   const [loadingState, setLoadingState] = useState<boolean>(false);
-  const [captcha, setCaptcha] = useState<API.GetCaptchaResp>({});
+  const [captcha, setCaptcha] = useState<API.GetCaptchaResp>({ id: "", src: "" });
   const [form] = Form.useForm();
 
   //获取验证码
@@ -21,13 +23,21 @@ const LoginPage: React.FC<unknown> = () => {
     }
   };
 
-    //初始化获取验证码
-    useEffect(() => {
-      // if(getToken() != ""){
-      //   history.push('/');
-      // }
-      getCaptchaFunc();
-    }, []);
+  //初始化获取验证码
+  useEffect(() => {
+    //存在token则跳转首页
+    if (getToken() != "") {
+      history.push('/');
+    }
+    getCaptchaFunc();
+  }, []);
+
+  const fetchLoginApis = async () => {
+    const userInfo = await initialState?.fetchUserInfo?.();
+    if (userInfo) {
+      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
+    }
+  };
 
   const handleSubmit = async (values: any) => {
     try {
@@ -38,12 +48,11 @@ const LoginPage: React.FC<unknown> = () => {
       if (resp.code === 0) {
         message.success('登录成功！');
         setToken(resp.data.token);
-        // await fetchLoginApis();
+        await fetchLoginApis();
         // /** 此方法会跳转到 redirect 参数所在的位置 */
-        // if (!history) return;
-        // const { query } = history.location;
-        // const { redirect } = query;
-        // history.push(redirect || '/');
+        if (!history) return;
+        const query = qs.parse(history.location?.search);
+        history.push(query?.redirect || '/');
         return;
       }
       message.error(resp.msg);

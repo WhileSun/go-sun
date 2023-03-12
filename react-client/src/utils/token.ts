@@ -1,12 +1,13 @@
+import cookie from 'react-cookies';
 export const getToken = ()=>{
-    let token = localStorage.getItem('token');
-    return token === null ? '': token;
+    let token = cookie.load('token');
+    return token === undefined ? '': token;
 }
 
 export const deleteToken = ()=>{
-    localStorage.removeItem('token');
+    cookie.remove('token');
 }
 
 export const setToken =(token:string)=>{
-    localStorage.setItem('token',token);
+    cookie.save('token', token,{ expires:  new Date(new Date().getTime() + 3*24 * 3600 * 1000) });
 }

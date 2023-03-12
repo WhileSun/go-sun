@@ -8,6 +8,25 @@ definitions:
       src:
         description: 验证码base64
         type: string
+    required:
+    - id
+    - src
+    type: object
+  types.GetUserInfoResp:
+    properties:
+      avatar:
+        description: 用户头像
+        type: string
+      real_name:
+        description: 用户名称
+        type: string
+      status:
+        description: 用户状态
+        type: boolean
+    required:
+    - avatar
+    - real_name
+    - status
     type: object
   types.JsonResp:
     properties:
@@ -37,8 +56,6 @@ definitions:
         type: string
       username:
         description: 用户名称
-        maxLength: 1
-        minLength: 0
         type: string
     required:
     - captcha_code
@@ -80,6 +97,24 @@ paths:
               type: object
       tags:
       - sys
+  /v1/user/info/get:
+    get:
+      description: 获取用户信息
+      operationId: getUserInfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.JsonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/types.GetUserInfoResp'
+              type: object
+      tags:
+      - user
   /v1/user/login:
     post:
       description: 登录接口
@@ -102,6 +137,26 @@ paths:
             - properties:
                 data:
                   $ref: '#/definitions/types.UserLoginResp'
+              type: object
+      tags:
+      - user
+  /v1/user/out.login:
+    get:
+      description: 用户退出接口
+      operationId: userOutLogin
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.JsonResp'
+            - properties:
+                data:
+                  items:
+                    type: string
+                  type: array
               type: object
       tags:
       - user

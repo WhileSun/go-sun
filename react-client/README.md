@@ -19,3 +19,10 @@ openAPI: {
 "openapi" : "max openapi"
 - 网址查看
 http://localhost:8000/umi/plugin/openapi
+
+### location 中的 query 不再支持了，后续推荐用 search
++ import { parse } from 'query-string';
++ const query = parse(history.location.search);
+
+### react cookie包
+import cookie from 'react-cookies'

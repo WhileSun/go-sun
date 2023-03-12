@@ -1,5 +1,6 @@
 import { defineConfig } from '@umijs/max';
 import proxy from './proxy';
+import routes  from './routes';
 
 export default defineConfig({
   antd: {},
@@ -10,6 +11,10 @@ export default defineConfig({
   plugins: [
     "@umijs/max-plugin-openapi"
   ],
+  // alias:{
+  //   '@static': require('path').resolve(__dirname, '../public/static'),
+  //   '@config':  require('path').resolve(__dirname, '../config'),
+  // },
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max';",
@@ -21,31 +26,6 @@ export default defineConfig({
     }
   ],
   proxy: proxy['dev'],
-  routes: [
-    {
-      name: ' CRUD 示例',
-      path: '/login',
-      component: './Login',
-    },
-    {
-      path: '/',
-      redirect: '/home',
-    },
-    {
-      name: '首页',
-      path: '/home',
-      component: './Home',
-    },
-    {
-      name: '权限演示',
-      path: '/access',
-      component: './Access',
-    },
-    // {
-    //     name: ' CRUD 示例',
-    //     path: '/table',
-    //     component: './Table',
-    // },
-  ],
+  routes: [routes],
   npmClient: 'pnpm',
 });
