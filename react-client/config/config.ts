@@ -8,6 +8,11 @@ export default defineConfig({
   model: {},
   initialState: {},
   request: {},
+  publicPath: '/dist/',
+  outputPath:"../go-server/dist", //打包输出地址
+  history: {
+    type: 'hash', //带有 # 的 URL
+  },
   plugins: [
     "@umijs/max-plugin-openapi"
   ],

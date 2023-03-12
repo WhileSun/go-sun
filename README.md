@@ -9,6 +9,10 @@ go-sun准备开发成一个golang+react+antd的后端管理框架
 - umi4.x
 - antd
 
+## swagger+openapi
+golang中引入swagger,swag init生成文件
+umi中引入openapi,pnpm openapi生成文件
+
 ## 功能点(一期)
 - [x] 用户登录
 - [ ] 权限管理

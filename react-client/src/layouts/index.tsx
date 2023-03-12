@@ -6,7 +6,7 @@ import { history } from '@umijs/max';
 import routes from '../../config/routes';
 import layout from '../../config/layout';
 import AvatarDropdown from '@/components/AvatarDropdown';
-import { LOGIN_PATH } from '@/constants';
+import { LOGIN_PATH,GIT_URL } from '@/constants';
 
 const LayoutPage = () => {
   const location = useLocation();
@@ -70,7 +70,7 @@ const LayoutPage = () => {
       // avatarProps={}
       actionsRender={(props) => {
         return [
-          <GithubFilled key="GithubFilled" />,
+          <GithubFilled key="GithubFilled"  onClick={()=>{window.open(GIT_URL)}}/>,
           <AvatarDropdown />,
         ];
       }}
@@ -83,8 +83,8 @@ const LayoutPage = () => {
               paddingBlockStart: 12,
             }}
           >
-            <div>© 2021 Made with love</div>
-            <div>by Ant Design</div>
+            <div>© 2023 go sun</div>
+            <div>by whileSun</div>
           </div>
         );
       }}

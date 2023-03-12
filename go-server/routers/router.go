@@ -12,6 +12,12 @@ import (
 func RegisterHandlers() *gin.Engine {
 	r := gin.New()
 
+	r.Static("/uploads", "./uploads")
+	r.Static("/dist", "./dist/")
+	r.GET("/", func(c *gin.Context) {
+		c.File("./dist/index.html")
+	})
+
 	r.Use(middleware.Cors())
 	//访问日志
 	r.Use(middleware.Logger())
