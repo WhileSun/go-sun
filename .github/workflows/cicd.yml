@@ -44,7 +44,7 @@ jobs:
       - name: go编译打包
         run: |
           cd go-server
-          go env -w CGO_ENABLED=0 && GOOS=linux GOARCH=amd64 go build -v ./...
+          go env -w CGO_ENABLED=0 && GOOS=linux GOARCH=amd64 go build -v
 
       # https://github.com/appleboy/scp-action
       - name: 部署到服务器
