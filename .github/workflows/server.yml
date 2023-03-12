@@ -1,0 +1,27 @@
+# This workflow will build a golang project
+# 由于上传服务器比较慢，故不使用
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # https://github.com/appleboy/ssh-action
+      - name: 远程编译
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          script: |
+            docker run --rm -it -v /home/go-project/go-sun/go-server:/go/src golang:1.19 /bin/sh
+            go env -w GOPROXY=https://goproxy.cn,direct && go env -w CGO_ENABLED=0
+            go mod tidy && GOOS=linux GOARCH=amd64 go build -v
+            docker restart go-web
