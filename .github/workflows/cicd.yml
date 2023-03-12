@@ -1,12 +1,12 @@
 # This workflow will build a golang project
-
+# 由于上传服务器比较慢，故不使用
 name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "ttt" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "ttt" ]
 
 jobs:
   build:
