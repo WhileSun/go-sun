@@ -8,9 +8,6 @@ import (
 )
 
 type ServerConf struct {
-	Name string `default:"go-server"`
-	Host string `default:"0.0.0.0"`
-	Port string `default:"3000"`
 }
 
 type AppConf struct {
@@ -18,7 +15,12 @@ type AppConf struct {
 }
 
 type Config struct {
-	ServerConf
+	Name     string `default:"go-server"`
+	Host     string `default:"0.0.0.0"`
+	Port     string `default:"3000"`
+	CertFile string
+	KeyFile  string
+
 	Captcha gcaptcha.CaptchaConf
 	Jwt     gjwt.JwtConf
 	Log     glog.LogConf

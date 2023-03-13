@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var configFile = flag.String("f", "etc/config.yaml", "the config file")
+var configFile = flag.String("f", "./etc/config.yaml", "the config file")
 
 // @title			接囗文档
 // @version		1.0
@@ -25,7 +25,6 @@ func main() {
 	flag.Parse()
 	var c config.Config
 	configor.Load(&c, *configFile)
-
 	gvalidator.InitGinValidate("zh")
 
 	handler := routers.RegisterHandlers()
@@ -37,7 +36,15 @@ func main() {
 	}
 	defer s.Close()
 	svc.NewServiceContext(c)
-
 	fmt.Println(fmt.Sprintf("[%s]Listening and serving %s:%s", c.Name, c.Host, c.Port))
-	s.ListenAndServe()
+	var err error
+	if c.KeyFile != "" && c.CertFile != "" {
+		err = s.ListenAndServeTLS(c.CertFile, c.KeyFile)
+	} else {
+		err = s.ListenAndServe()
+	}
+	if err != nil {
+		fmt.Println(fmt.Sprintf("[%s]start server fail error %s \r\n", c.Name, err.Error()))
+	}
+
 }
