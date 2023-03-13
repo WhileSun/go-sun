@@ -21,6 +21,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           script: |
+            cd /home/go-project/go-sun && git pull origin main
             docker run --rm -i -v /home/go-project/go-sun:/home/node node:1.18 /bin/sh /home/node/node.sh
             docker run --rm -i -v /home/go-project/go-sun:/go/src golang:1.19 /bin/sh /go/src/go.sh
             docker restart go-web
