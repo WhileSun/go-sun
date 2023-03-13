@@ -9,7 +9,7 @@ export default defineConfig({
   initialState: {},
   request: {},
   publicPath: '/dist/',
-  outputPath:"../go-server/dist", //打包输出地址
+  outputPath:"../web-server/dist", //打包输出地址
   history: {
     type: 'hash', //带有 # 的 URL
   },
