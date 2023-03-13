@@ -2,3 +2,4 @@
 /runtime
 /dist
 /etc/config.yaml
+/go-server
