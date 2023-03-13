@@ -1,3 +1,6 @@
+## 使用
+需把etc的config.bak.yaml文件修改为config.yaml(配置根据实际情况修改)
+
 ### 采用swagger
 - swag安装(swagger使用文档)  
 go get -u github.com/swaggo/swag/cmd/swag  
