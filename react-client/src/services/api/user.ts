@@ -10,6 +10,21 @@ export async function getUserInfo(options?: { [key: string]: any }) {
   });
 }
 
+/** 获取用户列表 GET /v1/user/list/get */
+export async function getUserList(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getUserListParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.JsonResp & { data?: API.GetUserListResp[] }>('/v1/user/list/get', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 登录接口 POST /v1/user/login */
 export async function userLogin(body: API.UserLoginReq, options?: { [key: string]: any }) {
   return request<API.JsonResp & { data?: API.UserLoginResp }>('/v1/user/login', {

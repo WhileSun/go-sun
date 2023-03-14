@@ -28,6 +28,22 @@ definitions:
     - real_name
     - status
     type: object
+  types.GetUserListResp:
+    properties:
+      book_ident:
+        description: 用户状态
+        type: string
+      book_name:
+        description: 用户名称
+        type: string
+      created_at:
+        description: 用户头像
+        type: string
+    required:
+    - book_ident
+    - book_name
+    - created_at
+    type: object
   types.JsonResp:
     properties:
       code:
@@ -112,6 +128,47 @@ paths:
             - properties:
                 data:
                   $ref: '#/definitions/types.GetUserInfoResp'
+              type: object
+      tags:
+      - user
+  /v1/user/list/get:
+    get:
+      description: 获取用户列表
+      operationId: getUserList
+      parameters:
+      - description: 验证码
+        in: query
+        name: captcha_code
+        required: true
+        type: string
+      - description: 验证码ID
+        in: query
+        name: captcha_id
+        required: true
+        type: string
+      - description: 用户名称
+        in: query
+        name: password
+        required: true
+        type: string
+      - description: 用户名称
+        in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/types.JsonResp'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/types.GetUserListResp'
+                  type: array
               type: object
       tags:
       - user

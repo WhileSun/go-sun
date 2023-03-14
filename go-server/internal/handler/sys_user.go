@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-sun/go-server/internal/logic"
 	"go-sun/go-server/internal/models"
@@ -19,7 +20,7 @@ type SysUserHandler struct {
 //	@id				userLogin
 //	@description	登录接口
 //	@Produce		json
-//	@Param			request	body		types.UserLoginReq	true	"UserLoginReq"
+//	@Param			request	body		types.UserLoginReq							true	"UserLoginReq"
 //	@Success		200		{object}	types.JsonResp{data=types.UserLoginResp}	"成功"
 //	@Router			/v1/user/login [post]
 func (c *SysUserHandler) Login(req *gin.Context) {
@@ -43,7 +44,7 @@ func (c *SysUserHandler) Login(req *gin.Context) {
 //	@id				userOutLogin
 //	@description	用户退出接口
 //	@Produce		json
-//	@Success		200		{object}	types.JsonResp{data=[]string}	"成功"
+//	@Success		200	{object}	types.JsonResp{data=[]string}	"成功"
 //	@Router			/v1/user/out.login [get]
 func (c *SysUserHandler) OutLogin(req *gin.Context) {
 	e.New(req).Msg(e.SUCCESS)
@@ -55,7 +56,7 @@ func (c *SysUserHandler) OutLogin(req *gin.Context) {
 //	@id				getUserInfo
 //	@description	获取用户信息
 //	@Produce		json
-//	@Success		200		{object}	types.JsonResp{data=types.GetUserInfoResp}	"成功"
+//	@Success		200	{object}	types.JsonResp{data=types.GetUserInfoResp}	"成功"
 //	@Router			/v1/user/info/get [get]
 func (c *SysUserHandler) GetInfo(req *gin.Context) {
 	userId := req.GetInt("userId")
@@ -65,4 +66,21 @@ func (c *SysUserHandler) GetInfo(req *gin.Context) {
 	resp.Status = userModel.Status
 	resp.Avatar = "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
 	e.New(req).Data(e.SUCCESS, resp)
+}
+
+// GetList 获取用户信息
+//
+//	@tags			user
+//	@id				getUserList
+//	@description	获取用户列表
+//	@Produce		json
+//	@Param			request	query		types.UserLoginReq								true	"UserLoginReq"
+//	@Success		200		{object}	types.JsonResp{data=[]types.GetUserListResp}	"成功"
+//	@Router			/v1/user/list/get [get]
+func (*SysUserHandler) GetList(req *gin.Context) {
+	list := make([]types.GetUserListResp, 0)
+	for i := 0; i < 50; i++ {
+		list = append(list, types.GetUserListResp{BookName: fmt.Sprintf("name_%d", i), BookIdent: "ident", CreatedAt: "123123"})
+	}
+	e.New(req).Data(e.SUCCESS, list)
 }

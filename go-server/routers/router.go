@@ -39,6 +39,7 @@ func RegisterHandlers() *gin.Engine {
 		{
 			userRouter.GET("/out.login", apis.SysUserHandler.OutLogin)
 			userRouter.GET("/info/get", apis.SysUserHandler.GetInfo)
+			userRouter.GET("/list/get", apis.SysUserHandler.GetList)
 		}
 	}
 

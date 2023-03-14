@@ -114,7 +114,9 @@ const LayoutPage = () => {
       >
         <ProCard
           style={{
+            position:'relative',
             minHeight: 600,
+            // overflow:'hidden',
           }}
         >
           {outlet}

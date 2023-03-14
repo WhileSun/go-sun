@@ -14,13 +14,13 @@ import (
 
 var configFile = flag.String("f", "./etc/config.yaml", "the config file")
 
-// @title			接囗文档
-// @version		1.0
-// @Swagger		2.0
-// @description	go-server服务接口文档
-// @contact.name	whileSun
-// @host			127.0.0.1:3000
-// @BasePath		/api
+//	@title			接囗文档
+//	@version		1.0
+//	@Swagger		2.0
+//	@description	go-server服务接口文档
+//	@contact.name	whileSun
+//	@host			127.0.0.1:3000
+//	@BasePath		/api
 func main() {
 	flag.Parse()
 	var c config.Config

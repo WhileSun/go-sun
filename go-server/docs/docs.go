@@ -81,6 +81,71 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/user/list/get": {
+            "get": {
+                "description": "获取用户列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "operationId": "getUserList",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "验证码",
+                        "name": "captcha_code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "验证码ID",
+                        "name": "captcha_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户名称",
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户名称",
+                        "name": "username",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/types.JsonResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/types.GetUserListResp"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/login": {
             "post": {
                 "description": "登录接口",
@@ -197,6 +262,28 @@ const docTemplate = `{
                 "status": {
                     "description": "用户状态",
                     "type": "boolean"
+                }
+            }
+        },
+        "types.GetUserListResp": {
+            "type": "object",
+            "required": [
+                "book_ident",
+                "book_name",
+                "created_at"
+            ],
+            "properties": {
+                "book_ident": {
+                    "description": "用户状态",
+                    "type": "string"
+                },
+                "book_name": {
+                    "description": "用户名称",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "用户头像",
+                    "type": "string"
                 }
             }
         },

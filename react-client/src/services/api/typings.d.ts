@@ -15,6 +15,26 @@ declare namespace API {
     status: boolean;
   };
 
+  type getUserListParams = {
+    /** 验证码 */
+    captcha_code: string;
+    /** 验证码ID */
+    captcha_id: string;
+    /** 用户名称 */
+    password: string;
+    /** 用户名称 */
+    username: string;
+  };
+
+  type GetUserListResp = {
+    /** 用户状态 */
+    book_ident: string;
+    /** 用户名称 */
+    book_name: string;
+    /** 用户头像 */
+    created_at: string;
+  };
+
   type JsonResp = {
     code: number;
     data: any;

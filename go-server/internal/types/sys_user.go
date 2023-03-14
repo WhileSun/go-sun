@@ -19,3 +19,9 @@ type GetUserInfoResp struct {
 	Status   bool   `json:"status" validate:"required"`    //用户状态
 	Avatar   string `json:"avatar" validate:"required"`    //用户头像
 }
+
+type GetUserListResp struct {
+	BookName  string `json:"book_name" validate:"required"`  //用户名称
+	BookIdent string `json:"book_ident" validate:"required"` //用户状态
+	CreatedAt string `json:"created_at" validate:"required"` //用户头像
+}
