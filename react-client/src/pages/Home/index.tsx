@@ -3,9 +3,10 @@ import { trim } from '@/utils/format';
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import styles from './index.less';
-import { WsTable } from '@/components/WsTools';
+import { WsTable,WsButton } from '@/components/WsTools';
 import { useState } from 'react';
 import { getUserList,userLogin } from '@/services/api/user';
+import { Space,Button } from 'antd';
 
 
 var store = {};
@@ -41,16 +42,10 @@ const HomePage: React.FC = () => {
         }
         btns = {
           [
-            {title:'添加',onClick:()=>{formFunc({});}}
+            {align:'right',name:'添加1',onClick:()=>{formFunc({});}},
+            {align:'left',name:'添加2',onClick:()=>{formFunc({});}}
           ]
         }
-        // toolbars = {
-        //   [
-        //     {align:"left",render:()=>{return (<><b>1233</b></>)}},
-        //     {align:"right",render:()=>{return (<><b>1</b></>)}},
-        //     {align:"right",render:()=>{return (<><b>2</b></>)}},
-        //   ]
-        // }
         th={[
           {name:"book_name",title:'书籍名称',width:'40%',render:v=>{return v||'-'}},
           {name:"book_ident",title:'书籍标识',width:'30%',align:'left',render:v=>{return v||'-'}},
@@ -63,18 +58,12 @@ const HomePage: React.FC = () => {
           //       </Link>
           //     )
           // }},
-          // {title:'操作',name:'id',width:80,align:'center',render:function(v,row){
-          //   return (<Space>
-          //     <WsButton title="编辑" onClick={()=>{
-          //       formFunc(row);
-          //     }}/>
-          //     {/* <WsButton title="删除" pop={true} onClick={()=>{
-          //       loadApi(deletePerms,{id:row.id},()=>{
-          //         tableRef.reload();
-          //       },true);
-          //     }}/> */}
-          //   </Space>);
-          // }},
+          {title:'操作',name:'id',width:80,align:'center',render:function(v,row){
+            return (<Space>
+              <WsButton name="编辑" />
+              <WsButton name="删除" />
+            </Space>);
+          }},
         ]}
         api={getUserList}
       />

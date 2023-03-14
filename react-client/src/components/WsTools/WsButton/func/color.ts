@@ -1,6 +1,6 @@
-export const titleColorType = (title:string) => {
+export const titleColorClassName = (name:string|undefined) => {
     let colorType = '';
-    switch (title) {
+    switch (name) {
         case '编辑':
             colorType = 'primary';
             break;

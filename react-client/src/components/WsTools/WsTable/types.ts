@@ -1,6 +1,7 @@
+import React from "react";
 import { Table } from "antd";
 import type { TableColumnType, FormItemProps, ColProps } from 'antd';
-import React from "react";
+import { WsButtonProps } from "../WsButton/types";
 
 /** table props */
 export interface WsTableProps {
@@ -29,7 +30,7 @@ export interface WsTableProps {
     /** table的ID */
     divId?: string,
     /** 自定义按钮 */
-    btns?: [],
+    btns?: HeaderWsButtonProps[] ,
     /** 自定义tool */
     toolbars?: Array<{align:'left'|'right', render: ()=>React.ReactElement }>,
     /** 直接赋值 */
@@ -103,4 +104,13 @@ export interface ApiResp {
     data?: any,
     total?: number,
     time?: number
-} 
+}
+
+export interface HeaderWsButtonProps extends WsButtonProps{
+    align?:"left"|"right"
+}
+
+export interface HeaderButtonProps{
+    btns?:HeaderWsButtonProps[] 
+    align?:"left"|"right"
+}

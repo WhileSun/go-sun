@@ -1,28 +1,31 @@
 import { paramIsset } from '../utils/tools';
-import WsButton from '../../WsButton';
+import WsButton from '../../WsButton/Button';
+import type { HeaderWsButtonProps,HeaderButtonProps } from '../types';
 
-const HeaderButton = (props) => {
-    const btns = paramIsset(props.btns, []);
-    return (
-        <>
-            {btns.map((btn, index) => initBtns(btn, index))}
-        </>
-    );
+const HeaderButton = (props: HeaderButtonProps) => {
+
+  const btns = paramIsset(props.btns, []);
+  return (
+    <>
+      {btns
+      .filter((btn:HeaderWsButtonProps)=>{if(btn.align===undefined){ btn.align='right'} return btn.align===props.align})
+      .map((btn: HeaderWsButtonProps, index: number) => initBtns(btn, index))}
+    </>
+  );
 }
 
 //生成button
-const initBtns = (btn, index) => {
-    return (
-        <WsButton
-            type='primary'
-            size="middle"
-            key={index}
-            style={{ marginRight: '10px' }}
-            onClick={btn.onClick}
-            title={btn.title}
-            color={btn.color}
-        />
-    );
+const initBtns = (btn: HeaderWsButtonProps, index: number) => {
+  const {align, ...btnConfig} = btn
+  return (
+    <div key={'Button'+index.toString()}>
+      <WsButton
+        {...btnConfig}
+        type='primary'
+        key={index}
+      />
+    </div>
+  );
 };
 
 export default HeaderButton;

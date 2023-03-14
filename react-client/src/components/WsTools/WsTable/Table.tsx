@@ -5,14 +5,13 @@ import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { paramIsset, getRandStr, parseFormParamsTools, toTreeTools, arrayColumnTools } from './utils/tools';
 import HeaderSearchForm from './components/HeaderSearchForm';
 import ColumnShowTool from './components/ColumnShowTool';
-// import HeaderButtonLeft from './components/HeaderButtonLeft';
+import HeaderButton from './components/HeaderButton';
 import initColumnFunc from './func/initColumn';
 import initShowColumnFunc from './func/initShowColumn';
 import './Table.less';
 
 
 const WsTable: React.FC<WsTableProps> = (props) => {
-
   const [formRef] = Form.useForm();
 
   const config = useMemo(() => {
@@ -28,7 +27,6 @@ const WsTable: React.FC<WsTableProps> = (props) => {
     param.treeTable = paramIsset(props.treeTable, false);
     param.footHeight = paramIsset(props.footHeight, 43);
     param.divId = paramIsset(props.divId, getRandStr('table'));
-    param.btns = paramIsset(props.btns, []);
 
     param.data = paramIsset(props.data, []);
     param.storeModel = props.storeModel;
@@ -185,12 +183,11 @@ const WsTable: React.FC<WsTableProps> = (props) => {
   }, []);
 
 
-  // header button left 
-  const headerButtonLeft = useMemo(() => {
+  // header toolbar left 
+  const headerToolbarLeft = useMemo(() => {
     const fieldLen = Object.keys(props.searchs).length;
     return (
       <>
-        {/* <HeaderButtonLeft btns={config.btns} /> */}
         {props.toolbars !== undefined ? props.toolbars
           .filter((toolbar) => toolbar.align == 'left')
           .map((toolbar, index) => {
@@ -201,6 +198,7 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               </div>
             );
           }) : ""}
+        <HeaderButton btns={props.btns} align="left"/>
         {fieldLen > 0 ? (
           <div className="header-toolbar-left-items">
             <Button type="primary" onClick={() => { formRef.submit(); }} style={{ marginRight: '10px' }} loading={loading}>
@@ -218,8 +216,8 @@ const WsTable: React.FC<WsTableProps> = (props) => {
   }, [loading])
 
 
-  // header button right
-  const headerButtonRight = useMemo(() => {
+  // header toolbar righttoolbars
+  const headerToolbarRight = useMemo(() => {
     const iconStyle = { fontSize: '16px', marginRight: '15px' };
     const treeFunc = () => {
       if (treeTableshow) {
@@ -242,6 +240,7 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               </div>
             );
           }) : ""}
+        <HeaderButton btns={props.btns} align="right"/>
         <div className='header-toolbar-right-items'>
           {config.treeTable ?
             <Tooltip placement="top" title='Tree Table 展开/隐藏'>
@@ -277,8 +276,8 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               {headerSearchForm}
             </div>
             <div className="header-toolbar">
-              <div className="header-toolbar-left">{headerButtonLeft}</div>
-              <div className="header-toolbar-right">{headerButtonRight}</div>
+              <div className="header-toolbar-left">{headerToolbarLeft}</div>
+              <div className="header-toolbar-right">{headerToolbarRight}</div>
             </div>
           </div>
           <div className="ws-table-container">
