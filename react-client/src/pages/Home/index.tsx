@@ -42,8 +42,8 @@ const HomePage: React.FC = () => {
         }
         btns = {
           [
-            {align:'right',name:'添加1',onClick:()=>{formFunc({});}},
-            {align:'left',name:'添加2',onClick:()=>{formFunc({});}}
+            {name:'添加',onClick:()=>{formFunc({});}},
+            {name:'删除',onClick:()=>{formFunc({});}}
           ]
         }
         th={[
@@ -62,6 +62,7 @@ const HomePage: React.FC = () => {
             return (<Space>
               <WsButton name="编辑" />
               <WsButton name="删除" />
+              <WsButton name="添加" />
             </Space>);
           }},
         ]}

@@ -24,6 +24,15 @@
                 background: transparent;
                 border: transparent;
             }
+            .ant-btn-primary&:hover{
+                background-color: @@ws-btn-color !important;
+                opacity: 0.8;
+            }
+            .ant-btn-default&:hover{
+                opacity: 0.7;
+                border-color:@@ws-btn-color !important;
+                color:@@ws-btn-color !important;
+            }
         }
     }
 }
@@ -45,6 +54,15 @@
             color:#000;
             background: transparent;
             border: transparent;
+        }
+        .ant-btn-primary&:hover{
+            border-color: @ws-btn-primary;
+            color:@ws-btn-primary;
+            background-color: unset !important;
+            opacity: 0.9;
+        }
+        .ant-btn-default&:hover{
+            opacity: 0.8;
         }
     }
 }
