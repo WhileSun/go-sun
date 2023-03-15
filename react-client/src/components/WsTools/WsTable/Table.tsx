@@ -1,8 +1,8 @@
 import { Table, Form, message, Button, Tooltip, Pagination } from 'antd';
 import { SettingOutlined, ReloadOutlined, SearchOutlined, MinusSquareOutlined, PlusSquareOutlined, OrderedListOutlined } from '@ant-design/icons';
 import { WsTableProps, ApiResp } from './types';
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
-import { paramIsset, getRandStr, parseFormParamsTools, toTreeTools, arrayColumnTools } from './utils/tools';
+import React, { useMemo, useState, useEffect, forwardRef,useImperativeHandle } from 'react';
+import { paramIsset, getRandStr, parseFormParamsTools, toTreeTools, arrayColumnTools,filterNameTools } from './utils/tools';
 import HeaderSearchForm from './components/HeaderSearchForm';
 import ColumnShowTool from './components/ColumnShowTool';
 import HeaderButton from './components/HeaderButton';
@@ -10,8 +10,7 @@ import initColumnFunc from './func/initColumn';
 import initShowColumnFunc from './func/initShowColumn';
 import './Table.less';
 
-
-const WsTable: React.FC<WsTableProps> = (props) => {
+const InternalWsTable:React.ForwardRefRenderFunction<any,WsTableProps> = (props,ref) => {
   const [formRef] = Form.useForm();
 
   const config = useMemo(() => {
@@ -167,7 +166,22 @@ const WsTable: React.FC<WsTableProps> = (props) => {
     formRef.setFieldsValue(initParams);
   }, []);
 
-
+  /** table 映射func*/
+  if(props.table !== undefined){
+    var tableInstance = props.table;
+    tableInstance.reload = () => { console.log('reload'); handleTableReload(); };
+    tableInstance.getCheckedIds = () => { return checkedIds; };
+    tableInstance.getDataList = () => { return apiresp.data };
+    tableInstance.filterName = (dataIndex:string, val:any) => {
+      if (val) {
+        setApiData(filterNameTools(transTableDataFunc(apiresp.data), dataIndex, val))
+      } else {
+        setApiData(transTableDataFunc(apiresp.data))
+      }
+    };
+    useImperativeHandle(ref,()=>tableInstance);
+  }
+  
   //header Form
   const headerSearchForm = useMemo(() => {
     return (
@@ -198,13 +212,13 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               </div>
             );
           }) : ""}
-        <HeaderButton btns={props.btns} align="left"/>
+        <HeaderButton btns={props.btns} align="left" />
         {fieldLen > 0 ? (
           <div className="header-toolbar-left-items">
             <Button type="primary" onClick={() => { formRef.submit(); }} style={{ marginRight: '10px' }} loading={loading}>
               查询
             </Button>
-            <Button htmlType="button" onClick={handleFormReset}  loading={loading}>
+            <Button htmlType="button" onClick={handleFormReset} loading={loading}>
               重置
             </Button>
           </div>
@@ -240,7 +254,7 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               </div>
             );
           }) : ""}
-        <HeaderButton btns={props.btns} align="right"/>
+        <HeaderButton btns={props.btns} align="right" />
         <div className='header-toolbar-right-items'>
           {config.treeTable ?
             <Tooltip placement="top" title='Tree Table 展开/隐藏'>
@@ -256,12 +270,12 @@ const WsTable: React.FC<WsTableProps> = (props) => {
           <Tooltip placement="top" title='刷新'>
             <ReloadOutlined style={iconStyle} onClick={handleTableReload} />
           </Tooltip>
-          {/* <ColumnShowTool
-          data={initShowColumn}
-          showColumns={showColumns}
-          setShowColumns={(keys) => { setShowColumns(keys) }}
-          solt={(<Tooltip placement="top" title='列设置'><SettingOutlined style={{ fontSize: '16px' }} /></Tooltip>)}
-        /> */}
+          <ColumnShowTool
+            data={initShowColumn}
+            showColumns={showColumns}
+            setShowColumns={(keys:string[]) => { setShowColumns(keys) }}
+            solt={(<Tooltip placement="top" title='列设置'><SettingOutlined style={{ fontSize: '16px' }} /></Tooltip>)}
+          />
         </div>
       </>
     )
@@ -282,7 +296,6 @@ const WsTable: React.FC<WsTableProps> = (props) => {
           </div>
           <div className="ws-table-container">
             <Table
-              ref={props.ref}
               rowSelection={config.checkbox ? {
                 type: 'checkbox',
                 onChange: (selectedRowKeys) => {
@@ -304,7 +317,7 @@ const WsTable: React.FC<WsTableProps> = (props) => {
               pagination={false}
               onChange={(paginate, filters, sorter, extra) => {
                 if (extra.action === 'paginate') {
-                  handleChangePage(paginate.current);
+                  handleChangePage(paginate.current!);
                 }
               }}
             // onRow={(record, index) => {
@@ -351,4 +364,5 @@ const WsTable: React.FC<WsTableProps> = (props) => {
   }
 }
 
+const WsTable = forwardRef(InternalWsTable)
 export default WsTable;

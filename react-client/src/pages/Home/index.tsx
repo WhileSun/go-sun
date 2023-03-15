@@ -4,32 +4,38 @@ import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import styles from './index.less';
 import { WsTable,WsButton } from '@/components/WsTools';
-import { useState } from 'react';
+import { useState ,useRef, useEffect} from 'react';
 import { getUserList,userLogin } from '@/services/api/user';
-import { Space,Button } from 'antd';
+import { Space,Button,Table,Form } from 'antd';
 
 
 var store = {};
 const HomePage: React.FC = () => {
-  
+  const tableRef = WsTable.useTable();
+  const ref = useRef();
   const [formData,setFormData] = useState({});
   const [formShow,setFormShow] = useState(false);
   const {stores,setStores} = useModel('storeModel');
-
-
+  
   const formFunc = (row:any)=>{
     setFormData(row)
     setFormShow(true);
   }
-  
+
+  useEffect(()=>{
+    console.log(tableRef);
+  },[tableRef])
+
   return (
     <>
       <WsTable
         store={store}
+        ref = {ref}
+        table = {tableRef}
         // display={"fixed"}
+        checkbox={true}
         rowKey="book_name"
         storeModel={ {params:stores,setParams:setStores,name:"table_home"}}
-        // table = {tableRef}
         searchs={
           [
             {type:'selectInput',listData:{'book_name':'书籍名称'}},
@@ -42,8 +48,8 @@ const HomePage: React.FC = () => {
         }
         btns = {
           [
-            {name:'添加',onClick:()=>{formFunc({});}},
-            {name:'删除',onClick:()=>{formFunc({});}}
+            {name:'添加',onClick:()=>{}},
+            {name:'删除',onClick:()=>{ console.log(tableRef.getCheckedIds())}}
           ]
         }
         th={[
@@ -60,7 +66,7 @@ const HomePage: React.FC = () => {
           // }},
           {title:'操作',name:'id',width:80,align:'center',render:function(v,row){
             return (<Space>
-              <WsButton name="编辑" />
+              <WsButton name="编辑" onClick={()=>{}}/>
               <WsButton name="删除" />
               <WsButton name="添加" />
             </Space>);

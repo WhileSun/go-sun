@@ -7,15 +7,15 @@ const ColumnShowTool:React.FC<any> = (props) => {
   const [checkAll, setCheckAll] = useState(false);
   const { allData, allKeys } = data;
 
-  const onCheck = (checkedKeys, info) => {
+  const onCheck = (checkedKeys:any, info:any) => {
     setShowColumns(checkedKeys);
     setIndeterminate(!!checkedKeys.length && checkedKeys.length < allKeys.length);
     setCheckAll(checkedKeys.length === allKeys.length);
   };
-  const onDrop = (info) => {
+  const onDrop = (info:any) => {
     console.log('info', info);
   }
-  const onCheckAllChange = (e) => {
+  const onCheckAllChange = (e:any) => {
     setIndeterminate(false);
     setCheckAll(e.target.checked)
     if (e.target.checked) {

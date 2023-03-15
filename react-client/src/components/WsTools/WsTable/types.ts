@@ -6,7 +6,9 @@ import { WsButtonProps } from "../WsButton/types";
 /** table props */
 export interface WsTableProps {
     /** ref */
-    ref?: React.Ref<HTMLDivElement>,
+    // ref?: React.Ref<HTMLDivElement>,
+    /** table ref */
+    table?:WsTableInstance,
     /** 列表column字段 */
     th: ColumnField<any>[],
     /** 全局保存form查询字段 name table名称需防止重名 */
@@ -114,3 +116,13 @@ export interface HeaderButtonProps{
     btns?:HeaderWsButtonProps[] 
     align?:"left"|"right"
 }
+
+
+export interface WsTableInstance<Values = any>{
+    reload: ()=>void
+    getCheckedIds:()=>React.Key[]
+    filterName:(dataIndex:string, val:any)=>void
+    getDataList:()=>any
+}
+
+

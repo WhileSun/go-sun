@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 //参数是否存在
 export const paramIsset = (param: any | undefined, defaultValue: any) => {
-  if  (param === undefined){
+  if (param === undefined) {
     return defaultValue
   }
   return param;
@@ -35,7 +35,7 @@ const momentDate = (momentObj: moment.MomentInput, type = 'date'): string => {
 
 /**解析form参数 */
 export const parseFormParamsTools = (params: { [key: string]: any } | undefined) => {
-  console.log('parseFormParamsTools',params);
+  console.log('parseFormParamsTools', params);
   let newParams: { [key: string]: any } = {};
   for (let field in params) {
     let val: any = params[field];
@@ -96,4 +96,19 @@ export const arrayColumnTools = (arr: Array<any>, v: string, k = ""): Array<Reac
   } else {
     return objs;
   }
+}
+
+
+export const filterNameTools = (rows:Array<any>, index:string, val:any, new_rows = [] as any[]) => {
+  rows.forEach(row => {
+    if (row[index].toString().includes(val)) {
+      new_rows.push(row);
+    } else {
+      //存在子集的情况
+      if (row?.children && row?.children?.length > 0) {
+        filterNameTools(row.children, index, val, new_rows)
+      }
+    }
+  })
+  return new_rows;
 }
