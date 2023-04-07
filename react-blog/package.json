@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "author": "whilesun <1207460050@qq.com>",
+  "scripts": {
+    "dev": "max dev",
+    "build": "max build",
+    "postinstall": "max setup",
+    "setup": "max setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "antd": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/mockjs": "^1.0.7",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@umijs/max": "^4.0.0",
+    "mockjs": "^1.1.0",
+    "typescript": "^5.0.0"
+  }
+}
